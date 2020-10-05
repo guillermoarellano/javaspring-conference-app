@@ -10,7 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name = "sessions")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Session {
 
   @Id
@@ -21,11 +24,7 @@ public class Session {
   private Integer session_length;
 
   @ManyToMany
-  @JoinTable(
-    name = "session_speakers",
-    joinColumns = @JoinColumn(name = "session_id"),
-    inverseJoinColumns = @JoinColumn(name = "speaker_id")
-  )
+  @JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
   private List<Speaker> speakers;
 
   public Session() {
