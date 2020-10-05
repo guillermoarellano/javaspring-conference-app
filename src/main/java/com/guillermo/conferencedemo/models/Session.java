@@ -1,9 +1,14 @@
 package com.guillermo.conferencedemo.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity(name = "sessions")
 public class Session {
@@ -15,8 +20,24 @@ public class Session {
   private String session_description;
   private Integer session_length;
 
+  @ManyToMany
+  @JoinTable(
+    name = "session_speakers",
+    joinColumns = @JoinColumn(name = "session_id"),
+    inverseJoinColumns = @JoinColumn(name = "speaker_id")
+  )
+  private List<Speaker> speakers;
+
   public Session() {
 
+  }
+
+  public List<Speaker> getSpeakers() {
+    return speakers;
+  }
+
+  public void setSpeakers(List<Speaker> speakers) {
+    this.speakers = speakers;
   }
 
   public Long getSession_id() {
